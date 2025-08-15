@@ -1,0 +1,8 @@
+streamlit
+groq
+langchain
+langchain_community
+pandas
+beautifulsoup4
+requests
+pdfplumber
