@@ -18,3 +18,7 @@ The AI-Powered Job Search Assistant is a Streamlit-based application that helps 
 - Title & Location → The app fetches relevant job listings using SerpAPI.
 - Summarize Jobs → Uses Groq LLM to generate easy-to-read summaries.
 - Upload Resume → Extracts text and provides improvement suggestions for a better job match.
+
+## Deployed App Link:
+
+- https://jobseeker-j8bdtqc6gveylo59tbuixm.streamlit.app/
