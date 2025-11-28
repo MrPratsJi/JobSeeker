@@ -2,13 +2,13 @@ import streamlit as st
 import requests
 import pdfplumber
 from langchain_groq import ChatGroq
-from langchain_core.messages import SystemMessage, HumanMessage  # <- fixed import
+from langchain_core.messages import SystemMessage, HumanMessage 
 
-# API Keys (move these to env vars in production)
+
 GROQ_API_KEY = "your-groq-key"
 SERP_API_KEY = "your-serp-key"
 
-# Initialize Groq LLM
+
 llm = ChatGroq(model_name="deepseek-r1-distill-llama-70b", groq_api_key=GROQ_API_KEY)
 
 
@@ -20,22 +20,18 @@ def _unwrap_response(resp):
       - otherwise str(resp)
     """
     try:
-        # common langchain-like message response
         if hasattr(resp, "content"):
             return resp.content
-        # sometimes it's a list of message objects or strings
         if isinstance(resp, (list, tuple)) and len(resp) > 0:
             first = resp[0]
             if hasattr(first, "content"):
                 return first.content
             return str(first)
-        # fallback
         return str(resp)
     except Exception:
         return str(resp)
 
 
-# Job Search Agent with Location
 def job_search(job_title, job_location):
     search_query = f"{job_title} in {job_location}"
     search_url = f"https://serpapi.com/search.json?engine=google_jobs&q={requests.utils.quote(search_query)}&api_key={SERP_API_KEY}"
@@ -58,7 +54,6 @@ def job_search(job_title, job_location):
     return jobs
 
 
-# Job Summary Agent
 def summarize_jobs(jobs):
     summaries = []
     for job in jobs:
@@ -77,7 +72,6 @@ def summarize_jobs(jobs):
     return summaries
 
 
-# Resume Extraction
 def extract_text_from_pdf(pdf_file):
     text = ""
     with pdfplumber.open(pdf_file) as pdf:
@@ -88,7 +82,6 @@ def extract_text_from_pdf(pdf_file):
     return text or "No text found in PDF."
 
 
-# Resume Improvement Agent
 def improve_resume(resume_text, job_title):
     prompt = (
         f"Review this resume and suggest clear, actionable improvements tailored for a {job_title} role.\n\n"
@@ -101,7 +94,6 @@ def improve_resume(resume_text, job_title):
         return f"Error improving resume: {e}"
 
 
-# Streamlit UI
 st.title("🚀 AI-Powered Job Search Assistant")
 
 job_title = st.text_input("Enter the job title you're looking for:")
@@ -132,3 +124,4 @@ if uploaded_resume:
     resume_text = extract_text_from_pdf(uploaded_resume)
     suggestions = improve_resume(resume_text, job_title or "the target role")
     st.write(suggestions)
+
