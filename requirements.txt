@@ -1,10 +1,11 @@
 streamlit
 groq
 langchain
-langchain_community
+langchain-community
 pandas
 beautifulsoup4
 requests
 pdfplumber
 langchain-groq
+langchain-core
 
